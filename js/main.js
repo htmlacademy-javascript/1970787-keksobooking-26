@@ -1,11 +1,11 @@
-function getNegativeToZero(number) {
+const getNegativeToZero = (number) => {
   if (number < 0) {
     number = 0;
   }
   return number;
-}
+};
 
-function getRandomInteger(firstNumber, secondNumber) {  //Максимум включается, минимум включается
+const getRandomInteger = (firstNumber, secondNumber) => {  //Максимум включается, минимум включается
   firstNumber = getNegativeToZero(firstNumber);
   secondNumber = getNegativeToZero(secondNumber);
 
@@ -24,11 +24,11 @@ function getRandomInteger(firstNumber, secondNumber) {  //Максимум вк�
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+};
 
 getRandomInteger(15.258, 10.147); //временное использование - потом удалить
 
-function getRandomFloating(firstNumber, secondNumber, symbolsAfterDot) {  //Максимум включается, минимум включается
+const getRandomFloating = (firstNumber, secondNumber, symbolsAfterDot) => {  //Максимум включается, минимум включается
   firstNumber = getNegativeToZero(firstNumber);
   secondNumber = getNegativeToZero(secondNumber);
   symbolsAfterDot = getNegativeToZero(symbolsAfterDot);
@@ -46,7 +46,8 @@ function getRandomFloating(firstNumber, secondNumber, symbolsAfterDot) {  //Ма
   }
 
   const calcRandomNumber = Math.random() * (max - min + 1) + min;
+  //TODO change string to number below,  add parseFloat()
   return calcRandomNumber.toFixed(symbolsAfterDot);
-}
+};
 
 getRandomFloating(-15.258,10.147, 5); //временное использование - потом удалить

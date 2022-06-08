@@ -46,8 +46,7 @@ const getRandomFloating = (firstNumber, secondNumber, symbolsAfterDot) => {  //�
   }
 
   const calcRandomNumber = Math.random() * (max - min + 1) + min;
-  //TODO change string to number below,  add parseFloat()
-  return calcRandomNumber.toFixed(symbolsAfterDot);
+  return parseFloat(calcRandomNumber.toFixed(symbolsAfterDot));
 };
 
 getRandomFloating(-15.258,10.147, 5); //временное использование - потом удалить

@@ -117,11 +117,11 @@ const getLocation = () => ({
 });
 
 const getCard = (element, index) => {
-  const location = getLocation();
+  const placeLocation = getLocation();
   return {
     author: getAuthor(element, index),
-    offer: getOffer(location),
-    location: location,
+    offer: getOffer(placeLocation),
+    location: placeLocation,
   };
 };
 

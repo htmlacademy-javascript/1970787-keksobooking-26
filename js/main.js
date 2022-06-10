@@ -6,12 +6,7 @@ const OFFER_TYPES = [
   'bungalow',
   'hotel',
 ];
-const TIMES_CHECKIN = [
-  '12:00',
-  '13:00',
-  '14:00',
-];
-const TIMES_CHECKOUT = [
+const TIMES_CHECKIN_CHECKOUT = [
   '12:00',
   '13:00',
   '14:00',
@@ -29,6 +24,10 @@ const OFFER_PHOTOS = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
 ];
+const MIN_LAT = 35.65000;
+const MAX_LAT = 35.70000;
+const MIN_LNG = 139.70000;
+const MAX_LNG = 139.80000;
 
 const getNegativeToZero = (number) => {
   if (number < 0) {
@@ -79,8 +78,6 @@ const getRandomFloating = (firstNumber, secondNumber, symbolsAfterDot) => {  //�
   return parseFloat(calcRandomNumber.toFixed(symbolsAfterDot));
 };
 
-getRandomFloating(-15.258,10.147, 5); //временное использование - потом удалить
-
 const getRandomFromFixLists = (list) => list[getRandomInteger(0, list.length - 1)];
 
 const getRandomArrayFromListNoRepeat = (list) => {
@@ -104,16 +101,16 @@ const getOffer = (location) => ({
   type: getRandomFromFixLists(OFFER_TYPES),
   rooms: getRandomInteger(1,10),
   guests: getRandomInteger(1,20),
-  checkin: getRandomFromFixLists(TIMES_CHECKIN),
-  checkout: getRandomFromFixLists(TIMES_CHECKOUT),
+  checkin: getRandomFromFixLists(TIMES_CHECKIN_CHECKOUT),
+  checkout: getRandomFromFixLists(TIMES_CHECKIN_CHECKOUT),
   features: getRandomArrayFromListNoRepeat(OFFER_FEATURES),
   description: 'Место описания',
   photos: getRandomArrayFromListNoRepeat(OFFER_PHOTOS),
 });
 
 const getLocation = () => ({
-  lat: getRandomFloating(35.65000, 35.70000, 5),
-  lng: getRandomFloating(139.70000, 139.80000, 5),
+  lat: getRandomFloating(MIN_LAT, MAX_LAT, 5),
+  lng: getRandomFloating(MIN_LNG, MAX_LNG, 5),
 });
 
 const getCard = (element, index) => {

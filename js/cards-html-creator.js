@@ -47,4 +47,4 @@ generatedData.forEach(({author,offer}) => {
   cardsFragment.append(cardElement);
 });
 
-mapCanvas.append(cardsFragment.children[0]);
+mapCanvas.append(cardsFragment.children[0]); // Временно отрисовываем первую карточку

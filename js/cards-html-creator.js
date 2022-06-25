@@ -19,31 +19,93 @@ generatedData.forEach(({author,offer}) => {
   const photoTemplate = photosContainer.querySelector('.popup__photo');
   const photosFragment = document.createDocumentFragment();
 
-  cardElement.querySelector('.popup__avatar').src = author.avatar;
-  cardElement.querySelector('.popup__title').textContent = offer.title;
-  cardElement.querySelector('.popup__text--address').textContent = offer.address;
-  cardElement.querySelector('.popup__text--price').textContent = `${offer.price} ₽/ночь`;
-  cardElement.querySelector('.popup__type').textContent = offerTypes[offer.type];
-  cardElement.querySelector('.popup__text--capacity').textContent = `${offer.rooms} комнаты для ${offer.guests} гостей`;
-  cardElement.querySelector('.popup__text--time').textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
-  cardElement.querySelector('.popup__description').textContent = offer.description;
+  if (author.avatar) {
+    cardElement.querySelector('.popup__avatar').src = author.avatar;
+  } else {
+    cardElement.querySelector('.popup__avatar').remove();
+  }
 
-  featuresList.forEach((featuresListItem) => {
-    const isNesessary = offer.features.some(
-      (feature) => featuresListItem.classList.contains(`popup__feature--${feature}`)
-    );
-    if (!isNesessary) {
-      featuresListItem.remove();
+  if (offer.title) {
+    cardElement.querySelector('.popup__title').textContent = offer.title;
+  } else {
+    cardElement.querySelector('.popup__title').remove();
+  }
+
+  if (offer.address) {
+    cardElement.querySelector('.popup__text--address').textContent = offer.address;
+  } else {
+    cardElement.querySelector('.popup__text--address').remove();
+  }
+
+  if (offer.price) {
+    cardElement.querySelector('.popup__text--price').textContent = `${offer.price} ₽/ночь`;
+  } else {cardElement.querySelector('.popup__text--price').remove();}
+
+  if (offer.type) {
+    cardElement.querySelector('.popup__type').textContent = offerTypes[offer.type];
+  } else {
+    cardElement.querySelector('.popup__type').remove();
+  }
+
+  if (offer.rooms && offer.guests) {
+    cardElement.querySelector('.popup__text--capacity').textContent = `${offer.rooms} комнаты для ${offer.guests} гостей`;
+  } else {
+    if (offer.rooms) {
+      cardElement.querySelector('.popup__text--capacity').textContent = `${offer.rooms} комнаты`;
+    } else {
+      if (offer.guests) {
+        cardElement.querySelector('.popup__text--capacity').textContent = `Для ${offer.guests} гостей`;
+      }else {
+        cardElement.querySelector('.popup__text--capacity').remove();
+      }
     }
-  });
+  }
 
-  offer.photos.forEach((photo) => {
-    const photoElement = photoTemplate.cloneNode(true);
-    photoElement.src = photo;
-    photosFragment.append(photoElement);
-  });
+  if (offer.checkin && offer.checkout) {
+    cardElement.querySelector('.popup__text--time').textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
+  } else {
+    if (offer.checkin) {
+      cardElement.querySelector('.popup__text--time').textContent = `Заезд после ${offer.checkin}`;
+    } else {
+      if (offer.checkout) {
+        cardElement.querySelector('.popup__text--time').textContent = `Выезд до ${offer.checkout}`;
+      } else {
+        cardElement.querySelector('.popup__text--time').remove();
+      }
+    }
+  }
 
-  photosContainer.replaceChildren(photosFragment);
+  if (offer.description) {
+    cardElement.querySelector('.popup__description').textContent = offer.description;
+  } else {
+    cardElement.querySelector('.popup__description').remove();
+  }
+
+  if (offer.features.length > 0) {
+    featuresList.forEach((featuresListItem) => {
+      const isNesessary = offer.features.some(
+        (feature) => featuresListItem.classList.contains(`popup__feature--${feature}`)
+      );
+      if (!isNesessary) {
+        featuresListItem.remove();
+      }
+    });
+  } else {
+    featuresContainer.remove();
+  }
+
+  if (offer.photos.length > 0) {
+    offer.photos.forEach((photo) => {
+      const photoElement = photoTemplate.cloneNode(true);
+      photoElement.src = photo;
+      photosFragment.append(photoElement);
+    });
+    photosContainer.replaceChildren(photosFragment);
+
+  } else {
+    photosContainer.remove();
+  }
+
   cardsFragment.append(cardElement);
 });
 

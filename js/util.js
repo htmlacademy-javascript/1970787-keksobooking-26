@@ -61,6 +61,4 @@ export const getRandomArrayFromListNoRepeat = (list) => {
   return returnedArray;
 };
 
-export const isEscapeKey = (evt) => {
-  return evt.key === 'Escape';
-};
+export const isEscapeKey = (evt) => evt.key === 'Escape';

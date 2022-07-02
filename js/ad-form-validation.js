@@ -1,5 +1,6 @@
+import {isEscapeKey} from './util.js';
+
 const form = document.querySelector('.ad-form');
-const errorMessage = document.querySelector('#error').content.cloneNode(true);
 const body = document.querySelector('body');
 const roomNumber = form.querySelector('#room_number');
 const capacity = form.querySelector('#capacity');
@@ -21,6 +22,31 @@ const checkRooms = (value) => {
   return value >= capacity.value;
 };
 
+const onPopupEscKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closeMessageModal(evt.currentTarget.removeTarget);
+  }
+};
+
+const openMessageModal = (messageClassName) => {
+
+  const messageTemplate = document.querySelector(`#${messageClassName}`).content.cloneNode(true);
+  body.append(messageTemplate);
+
+  const message = body.querySelector(`.${messageClassName}`);
+
+  message.addEventListener('click', () => {closeMessageModal(message);});
+  document.addEventListener('keydown', onPopupEscKeydown);
+  document.removeTarget = message;
+};
+
+function closeMessageModal (message)  {
+  message.remove();
+
+  document.removeEventListener('keydown', onPopupEscKeydown);
+}
+
 pristine.addValidator(roomNumber, checkRooms, 'Количество комнат не может быть меньше количества гостей, если помещение не предназначено для гостей выберите "100 комнат"');
 capacity.addEventListener('change', () => pristine.validate(roomNumber));
 
@@ -29,11 +55,12 @@ form.addEventListener('submit', (evt) => {
 
   const isValid = pristine.validate();
   if (isValid) {
-    console.log('Можно отправлять');
-  } else {
-    console.log('неверно');
+    openMessageModal('success');
+    form.submit();
 
-    // console.log(checkTest(roomNumber.value, capacity));
-    // body.append(errorMessage);
+  } else {
+    openMessageModal('error');
   }
 });
+
+

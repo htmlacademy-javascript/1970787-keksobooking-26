@@ -4,6 +4,8 @@ const form = document.querySelector('.ad-form');
 const body = document.querySelector('body');
 const roomNumber = form.querySelector('#room_number');
 const capacity = form.querySelector('#capacity');
+const ROOMS_WITHOUT_GUESTS = '100';
+const NO_GUESTS = '0';
 
 const pristine = new Pristine(form, {
   classTo: 'ad-form__element',
@@ -13,11 +15,11 @@ const pristine = new Pristine(form, {
 });
 
 const checkRooms = (value) => {
-  if (value === '100') {
-    return capacity.value === '0';
+  if (value === ROOMS_WITHOUT_GUESTS) {
+    return capacity.value === NO_GUESTS;
   }
-  if (capacity.value === '0') {
-    return value === '100';
+  if (capacity.value === NO_GUESTS) {
+    return value === ROOMS_WITHOUT_GUESTS;
   }
   return value >= capacity.value;
 };

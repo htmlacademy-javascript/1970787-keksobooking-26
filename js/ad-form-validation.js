@@ -57,7 +57,7 @@ form.addEventListener('submit', (evt) => {
   if (isValid) {
     openMessageModal('success');
     form.submit();
-
+  //todo add reset form function
   } else {
     openMessageModal('error');
   }

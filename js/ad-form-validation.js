@@ -4,8 +4,17 @@ const form = document.querySelector('.ad-form');
 const body = document.querySelector('body');
 const roomNumber = form.querySelector('#room_number');
 const capacity = form.querySelector('#capacity');
+const adPrice = form.querySelector('#price');
+const houseType = form.querySelector('#type');
 const ROOMS_WITHOUT_GUESTS = '100';
 const NO_GUESTS = '0';
+const MIN_PRICES_OF_AD = {
+  palace: 10000,
+  flat: 1000,
+  house: 5000,
+  bungalow: 0,
+  hotel: 3000,
+};
 
 const pristine = new Pristine(form, {
   classTo: 'ad-form__element',
@@ -13,6 +22,13 @@ const pristine = new Pristine(form, {
   errorTextTag: 'label',
   errorTextClass: 'ad-form__label ad-form__label--error'
 });
+
+const getMinPriceOfAd = () => {
+  adPrice.placeholder = MIN_PRICES_OF_AD[houseType.value];
+  pristine.validate(adPrice);
+};
+
+const getMinPriceErrorMessage = () => `Минимальная цена ${adPrice.placeholder} руб.`;
 
 const checkRooms = (value) => {
   if (value === ROOMS_WITHOUT_GUESTS) {
@@ -23,6 +39,11 @@ const checkRooms = (value) => {
   }
   return value >= capacity.value;
 };
+
+const checkPrice = (value) => value >= MIN_PRICES_OF_AD[houseType.value];
+
+pristine.addValidator(adPrice, checkPrice, getMinPriceErrorMessage);
+houseType.addEventListener('change', getMinPriceOfAd);
 
 const onPopupEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {

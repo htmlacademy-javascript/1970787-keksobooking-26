@@ -5,8 +5,6 @@ const mapFiltersFormList = mapFiltersForm.querySelectorAll('select, fieldset');
 
 const getPageDisabled = () => {
 
-  //todo disabled map field
-
   adForm.classList.add('ad-form--disabled');
   //todo disabled slider
   adFormList.forEach((adFormItem) => {
@@ -21,8 +19,6 @@ const getPageDisabled = () => {
 };
 
 const getPageEnabled = () => {
-
-  //todo enabled map field
 
   adForm.classList.remove('ad-form--disabled');
   //todo enabled slider

@@ -1,7 +1,6 @@
 import {getGeneratedCards} from './card-generator.js';
 
 const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
-const mapCanvas = document.querySelector('#map-canvas'); // будем временно вставлять карточки сюда
 const generatedData = getGeneratedCards();
 const cardsFragment = document.createDocumentFragment();
 const buildingTypes = document.querySelector('#type').children;
@@ -108,5 +107,3 @@ generatedData.forEach(({author,offer}) => {
 
   cardsFragment.append(cardElement);
 });
-
-mapCanvas.append(cardsFragment.children[0]); // Временно отрисовываем первую карточку

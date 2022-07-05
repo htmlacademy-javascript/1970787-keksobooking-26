@@ -18,7 +18,7 @@ const getPageDisabled = () => {
   });
 };
 
-const getPageEnabled = () => {
+export const getPageEnabled = () => {
 
   adForm.classList.remove('ad-form--disabled');
   //todo enabled slider
@@ -34,4 +34,3 @@ const getPageEnabled = () => {
 };
 
 getPageDisabled();
-getPageEnabled();

@@ -1,9 +1,8 @@
 import {getGeneratedCards} from './card-generator.js';
 
 const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
-const mapCanvas = document.querySelector('#map-canvas'); // будем временно вставлять карточки сюда
-const generatedData = getGeneratedCards();
-const cardsFragment = document.createDocumentFragment();
+export const generatedData = getGeneratedCards();
+export const cardsFragment = document.createDocumentFragment();
 const buildingTypes = document.querySelector('#type').children;
 const offerTypes = {};
 
@@ -11,7 +10,7 @@ for (let i = 0; i < buildingTypes.length; i++) {
   offerTypes[buildingTypes[i].value]= buildingTypes[i].textContent;
 }
 
-generatedData.forEach(({author,offer}) => {
+generatedData.forEach(({author,offer}, index) => {
   const cardElement = cardTemplate.cloneNode(true);
   const featuresContainer = cardElement.querySelector('.popup__features');
   const featuresList = featuresContainer.querySelectorAll('.popup__feature');
@@ -26,7 +25,7 @@ generatedData.forEach(({author,offer}) => {
   }
 
   if (offer.title) {
-    cardElement.querySelector('.popup__title').textContent = offer.title;
+    cardElement.querySelector('.popup__title').textContent = `${offer.title} ${index + 1}`;
   } else {
     cardElement.querySelector('.popup__title').remove();
   }
@@ -76,7 +75,7 @@ generatedData.forEach(({author,offer}) => {
   }
 
   if (offer.description) {
-    cardElement.querySelector('.popup__description').textContent = offer.description;
+    cardElement.querySelector('.popup__description').textContent = `${offer.description} ${index + 1}`;
   } else {
     cardElement.querySelector('.popup__description').remove();
   }
@@ -108,5 +107,3 @@ generatedData.forEach(({author,offer}) => {
 
   cardsFragment.append(cardElement);
 });
-
-mapCanvas.append(cardsFragment.children[0]); // Временно отрисовываем первую карточку

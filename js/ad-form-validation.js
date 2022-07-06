@@ -8,9 +8,10 @@ const adPrice = form.querySelector('#price');
 const houseType = form.querySelector('#type');
 const timesIn = form.querySelector('#timein');
 const timesOut = form.querySelector('#timeout');
+
 const ROOMS_WITHOUT_GUESTS = '100';
 const NO_GUESTS = '0';
-const MIN_PRICES_OF_AD = {
+export const MIN_PRICES_OF_AD = {
   palace: 10000,
   flat: 1000,
   house: 5000,
@@ -29,7 +30,7 @@ const synhroTimesOutChange = () => {
 timesOut.addEventListener('change', synhroTimesOutChange);
 timesIn.addEventListener('change', synhroTimesInChange);
 
-const pristine = new Pristine(form, {
+export const pristine = new Pristine(form, {
   classTo: 'ad-form__element',
   errorTextParent: 'ad-form__element',
   errorTextTag: 'label',

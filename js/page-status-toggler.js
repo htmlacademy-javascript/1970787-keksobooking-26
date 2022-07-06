@@ -1,14 +1,13 @@
 const adForm = document.querySelector('.ad-form');
 const adFormList = adForm.querySelectorAll('fieldset');
 const mapFiltersForm = document.querySelector('.map__filters');
+const sliderElement = document.querySelector('.ad-form__slider');
 const mapFiltersFormList = mapFiltersForm.querySelectorAll('select, fieldset');
 
 const getPageDisabled = () => {
 
-  //todo disabled map field
-
   adForm.classList.add('ad-form--disabled');
-  //todo disabled slider
+  sliderElement.setAttribute('disabled', true);
   adFormList.forEach((adFormItem) => {
     adFormItem.disabled = true;
   });
@@ -20,12 +19,10 @@ const getPageDisabled = () => {
   });
 };
 
-const getPageEnabled = () => {
-
-  //todo enabled map field
+export const getPageEnabled = () => {
 
   adForm.classList.remove('ad-form--disabled');
-  //todo enabled slider
+  sliderElement.removeAttribute('disabled');
   adFormList.forEach((adFormItem) => {
     adFormItem.disabled = false;
   });
@@ -38,4 +35,3 @@ const getPageEnabled = () => {
 };
 
 getPageDisabled();
-getPageEnabled();

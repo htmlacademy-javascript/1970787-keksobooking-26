@@ -1,11 +1,11 @@
 import {getPageEnabled} from './page-status-toggler.js';
 import {generatedData, cardsFragment} from './cards-html-creator.js';
 
-const addressField = document.querySelector('#address');
 const START_POINT = {
   lat: 35.6895000,
   lng: 139.6917100,
 };
+const addressField = document.querySelector('#address');
 
 const map = L.map('map-canvas')
   .on('load', () => {

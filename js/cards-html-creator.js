@@ -11,7 +11,7 @@ for (let i = 0; i < buildingTypes.length; i++) {
 }
 
 export const getAdCards = (ads) => {
-  ads.forEach(({author,offer}, index) => {
+  ads.forEach(({author,offer}) => {
     const cardElement = cardTemplate.cloneNode(true);
     const featuresContainer = cardElement.querySelector('.popup__features');
     const featuresList = featuresContainer.querySelectorAll('.popup__feature');
@@ -26,7 +26,7 @@ export const getAdCards = (ads) => {
     }
 
     if (offer.title) {
-      cardElement.querySelector('.popup__title').textContent = `${offer.title} ${index + 1}`;
+      cardElement.querySelector('.popup__title').textContent = offer.title;
     } else {
       cardElement.querySelector('.popup__title').remove();
     }
@@ -76,7 +76,7 @@ export const getAdCards = (ads) => {
     }
 
     if (offer.description) {
-      cardElement.querySelector('.popup__description').textContent = `${offer.description} ${index + 1}`;
+      cardElement.querySelector('.popup__description').textContent = offer.description;
     } else {
       cardElement.querySelector('.popup__description').remove();
     }

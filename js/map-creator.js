@@ -1,11 +1,13 @@
 import {getPageEnabled} from './page-status-toggler.js';
 import {cardsFragment, getAdCards} from './cards-html-creator.js';
 import {getAdsData} from './server-api.js';
+import {showAlert} from './util.js';
 
 const START_POINT = {
   lat: 35.6895000,
   lng: 139.6917100,
 };
+const CARDS_LIMIT = 10;
 
 const addressField = document.querySelector('#address');
 
@@ -13,8 +15,9 @@ const map = L.map('map-canvas')
   .on('load', () => {
     getPageEnabled();
     getAdsData((ads) => {
-      getAdsPoints(ads);
-    });
+      const adsList = ads.slice(0, CARDS_LIMIT);
+      getAdsPoints(adsList);
+    }, showAlert);
   })
   .setView({
     lat: START_POINT.lat,

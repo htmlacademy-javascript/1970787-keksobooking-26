@@ -1,20 +1,25 @@
 import {getPageEnabled} from './page-status-toggler.js';
-import {generatedData, cardsFragment} from './cards-html-creator.js';
+import {cardsFragment, getAdCards} from './cards-html-creator.js';
+import {getAdsData} from './server-api.js';
 
 const START_POINT = {
   lat: 35.6895000,
   lng: 139.6917100,
 };
+
 const addressField = document.querySelector('#address');
 
 const map = L.map('map-canvas')
   .on('load', () => {
     getPageEnabled();
+    getAdsData((ads) => {
+      getAdsPoints(ads);
+    });
   })
   .setView({
     lat: START_POINT.lat,
     lng: START_POINT.lng,
-  }, 8);
+  }, 12);
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -64,9 +69,12 @@ const createAdsMarker = (pointsData, index) => {
     .bindPopup(cardsFragment.children[index]);
 };
 
-generatedData.forEach((pointsData, index) => {
-  createAdsMarker(pointsData, index);
-});
+function getAdsPoints(ads) {
+  getAdCards(ads);
+  ads.forEach((pointsData, index) => {
+    createAdsMarker(pointsData, index);
+  });
+}
 
 marker.addTo(markerLayer);
 addressField.value = `${START_POINT.lat.toFixed(5)}, ${START_POINT.lng.toFixed(5)}`;

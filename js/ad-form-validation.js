@@ -92,8 +92,14 @@ form.addEventListener('submit', (evt) => {
 
   const isValid = pristine.validate();
   if (isValid) {
-    openMessageModal('success');
-    form.submit();
+    const formData = new FormData(evt.target);
+    fetch(
+      'https://26.javascript.pages.academy/keksobooking',
+      {
+        method: 'POST',
+        body: formData,
+      },
+    ).then(() => openMessageModal('success'));
   //todo add reset form function
   } else {
     openMessageModal('error');

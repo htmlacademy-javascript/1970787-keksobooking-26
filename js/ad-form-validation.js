@@ -1,4 +1,5 @@
 import {isEscapeKey} from './util.js';
+import {sendData} from './server-api.js';
 
 const form = document.querySelector('.ad-form');
 const body = document.querySelector('body');
@@ -93,14 +94,16 @@ form.addEventListener('submit', (evt) => {
   const isValid = pristine.validate();
   if (isValid) {
     const formData = new FormData(evt.target);
-    fetch(
-      'https://26.javascript.pages.academy/keksobooking',
-      {
-        method: 'POST',
-        body: formData,
+    sendData(
+      () => {
+        openMessageModal('success');
+        form.reset();
       },
-    ).then(() => openMessageModal('success'));
-  //todo add reset form function
+      () => {
+        openMessageModal('error');
+      },
+      formData,
+    );
   } else {
     openMessageModal('error');
   }

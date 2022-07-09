@@ -67,8 +67,8 @@ export const isEscapeKey = (evt) => evt.key === 'Escape';
 
 export const showAlert = (message) => {
   const alertContainer = document.createElement('div');
-  alertContainer.style.zIndex = '100';
-  alertContainer.style.position = 'absolute';
+  alertContainer.style.zIndex = '400';
+  alertContainer.style.position = 'fixed';
   alertContainer.style.left = '0';
   alertContainer.style.top = '0';
   alertContainer.style.right = '0';

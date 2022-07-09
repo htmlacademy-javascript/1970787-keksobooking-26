@@ -86,4 +86,9 @@ marker.on('moveend', (evt) => {
   addressField.value = `${evt.target.getLatLng().lat.toFixed(5)}, ${evt.target.getLatLng().lng.toFixed(5)}`;
 });
 
+export const resetMap = () => {
+  marker.setLatLng(START_POINT);
+  addressField.value = `${START_POINT.lat.toFixed(5)}, ${START_POINT.lng.toFixed(5)}`;
+};
+
 

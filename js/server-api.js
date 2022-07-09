@@ -13,3 +13,23 @@ export const getAdsData = (onSuccess, onFail) => {
       onFail('Не удалось загрузить объявления. Пожалуйста перезагрузите страницу');
     });
 };
+
+export const sendData = (onSuccess, onFail, body) => {
+  fetch(
+    'https://26.javascript.pages.academy/keksobooking',
+    {
+      method: 'POST',
+      body,
+    },
+  )
+    .then((response) => {
+      if (response.ok) {
+        onSuccess();
+      } else {
+        onFail('Данные не отправлены, попробуйте еще раз');
+      }
+    })
+    .catch(() => {
+      onFail('Данные не отправлены, попробуйте еще раз');
+    });
+};

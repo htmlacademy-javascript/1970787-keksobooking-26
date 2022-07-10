@@ -1,20 +1,28 @@
 import {getPageEnabled} from './page-status-toggler.js';
-import {generatedData, cardsFragment} from './cards-html-creator.js';
+import {cardsFragment, getAdCards} from './cards-html-creator.js';
+import {getAdsData} from './server-api.js';
+import {showAlert} from './util.js';
 
 const START_POINT = {
   lat: 35.6895000,
   lng: 139.6917100,
 };
+const CARDS_LIMIT = 10;
+
 const addressField = document.querySelector('#address');
 
 const map = L.map('map-canvas')
   .on('load', () => {
     getPageEnabled();
+    getAdsData((ads) => {
+      const adsList = ads.slice(0, CARDS_LIMIT);
+      getAdsPoints(adsList);
+    }, showAlert);
   })
   .setView({
     lat: START_POINT.lat,
     lng: START_POINT.lng,
-  }, 8);
+  }, 12);
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -64,9 +72,12 @@ const createAdsMarker = (pointsData, index) => {
     .bindPopup(cardsFragment.children[index]);
 };
 
-generatedData.forEach((pointsData, index) => {
-  createAdsMarker(pointsData, index);
-});
+function getAdsPoints(ads) {
+  getAdCards(ads);
+  ads.forEach((pointsData, index) => {
+    createAdsMarker(pointsData, index);
+  });
+}
 
 marker.addTo(markerLayer);
 addressField.value = `${START_POINT.lat.toFixed(5)}, ${START_POINT.lng.toFixed(5)}`;
@@ -74,5 +85,10 @@ addressField.value = `${START_POINT.lat.toFixed(5)}, ${START_POINT.lng.toFixed(5
 marker.on('moveend', (evt) => {
   addressField.value = `${evt.target.getLatLng().lat.toFixed(5)}, ${evt.target.getLatLng().lng.toFixed(5)}`;
 });
+
+export const resetMap = () => {
+  marker.setLatLng(START_POINT);
+  addressField.value = `${START_POINT.lat.toFixed(5)}, ${START_POINT.lng.toFixed(5)}`;
+};
 
 

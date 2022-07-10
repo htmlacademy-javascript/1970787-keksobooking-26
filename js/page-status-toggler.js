@@ -7,7 +7,7 @@ const mapFiltersFormList = mapFiltersForm.querySelectorAll('select, fieldset');
 const getPageDisabled = () => {
 
   adForm.classList.add('ad-form--disabled');
-  sliderElement.setAttribute('disabled', true);
+  sliderElement.setAttribute('disabled', 'true');
   adFormList.forEach((adFormItem) => {
     adFormItem.disabled = true;
   });

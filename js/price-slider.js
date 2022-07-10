@@ -27,6 +27,18 @@ sliderElement.noUiSlider.on('update', () => {
   pristine.validate(adPrice);
 });
 
+adPrice.addEventListener('change', () => {
+  if (adPrice.value) {
+    sliderElement.noUiSlider.set(adPrice.value);
+  } else {
+    sliderElement.noUiSlider.set(MIN_PRICES_OF_AD[houseType.value]);
+  }
+});
+
+export const resetSlider = () =>{
+  sliderElement.noUiSlider.set(MIN_PRICES_OF_AD[houseType.value]);
+};
+
 houseType.addEventListener('change', () => {
   sliderElement.noUiSlider.updateOptions({
     range: {

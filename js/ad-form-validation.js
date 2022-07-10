@@ -1,4 +1,5 @@
 import {isEscapeKey} from './util.js';
+import {sendData} from './server-api.js';
 
 const form = document.querySelector('.ad-form');
 const body = document.querySelector('body');
@@ -92,9 +93,17 @@ form.addEventListener('submit', (evt) => {
 
   const isValid = pristine.validate();
   if (isValid) {
-    openMessageModal('success');
-    form.submit();
-  //todo add reset form function
+    const formData = new FormData(evt.target);
+    sendData(
+      () => {
+        openMessageModal('success');
+        form.reset();
+      },
+      () => {
+        openMessageModal('error');
+      },
+      formData,
+    );
   } else {
     openMessageModal('error');
   }

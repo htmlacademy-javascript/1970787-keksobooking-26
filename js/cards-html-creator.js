@@ -1,7 +1,4 @@
-// import {getGeneratedCards} from './card-generator.js'; //todo удалить card-generator
-
 const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
-// export const generatedData = getGeneratedCards();
 export const cardsFragment = document.createDocumentFragment();
 const buildingTypes = document.querySelector('#type').children;
 const offerTypes = {};

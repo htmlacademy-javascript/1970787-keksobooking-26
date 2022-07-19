@@ -11,6 +11,7 @@ const housingTypeField = mapFiltersForm.querySelector('#housing-type');
 const housingRoomsField = mapFiltersForm.querySelector('#housing-rooms');
 const housingGuestsField = mapFiltersForm.querySelector('#housing-guests');
 const housingPriceField = mapFiltersForm.querySelector('#housing-price');
+const housingFeaturesField = mapFiltersForm.querySelector('#housing-features');
 
 const filterAdsType = (ads) => housingTypeField.value !== 'any' ? ads.offer.type === housingTypeField.value : true;
 
@@ -33,9 +34,54 @@ const filterAdsPrice = (ads) => {
   return housingPriceField.value !== 'any' ? adsPrice() === housingPriceField.value : true;
 };
 
+const filterAdsFeatures = (ads) => {
+  const checkedFeatures = Array.from(housingFeaturesField.querySelectorAll(':checked')).map((inputElement) => inputElement.value);
+  let test = false;
+  if (checkedFeatures.length > 0) {
+    if (ads.offer.features) {
+      for (let i = 0; i < ads.offer.features.length; i++) {
+        if (checkedFeatures.some((checkedFeature) => checkedFeature === ads.offer.features[i])) {
+          test = true;
+        }
+      }
+    }
+  } else {
+    test = true;
+  }
+  return test;
+};
+
+const getAdsFeaturesRank = (ads) => {
+  const checkedFeatures = Array.from(housingFeaturesField.querySelectorAll(':checked')).map((inputElement) => inputElement.value);
+  let rank = 0;
+  if (ads.offer.features) {
+    ads.offer.features.forEach((offerFeature) => {
+      if (checkedFeatures.some((checkedFeature) => checkedFeature === offerFeature)) {
+        rank++;
+      }
+    });
+  }
+  return rank;
+};
+
+const compareAdsFeatures = (adA, adB) =>{
+  const rankA = getAdsFeaturesRank(adA);
+  const rankB = getAdsFeaturesRank(adB);
+
+  return rankB - rankA;
+};
+
 mapFiltersForm.addEventListener('change', () => {
   getAdsData((ads) => {
-    const adsList = ads.filter(filterAdsType).filter(filterAdsRooms).filter(filterAdsGuests).filter(filterAdsPrice).slice(0, CARDS_LIMIT);
+    const adsList = ads
+      .filter(filterAdsType)
+      .filter(filterAdsRooms)
+      .filter(filterAdsGuests)
+      .filter(filterAdsPrice)
+      .filter(filterAdsFeatures)
+      .slice()
+      .sort(compareAdsFeatures)
+      .slice(0, CARDS_LIMIT);
     getAdsPoints(adsList);
   }, showAlert);
 });

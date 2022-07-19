@@ -81,7 +81,6 @@ const createAdsMarker = (pointsData, index) => {
 
 export function getAdsPoints(ads) {
   adsFragment = getAdCards(ads);
-  console.log(ads);
   clearLayer();
   ads.forEach((pointsData, index) => {
     createAdsMarker(pointsData, index);

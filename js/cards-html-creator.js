@@ -1,5 +1,4 @@
 const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
-export const cardsFragment = document.createDocumentFragment();
 const buildingTypes = document.querySelector('#type').children;
 const offerTypes = {};
 
@@ -8,6 +7,7 @@ for (let i = 0; i < buildingTypes.length; i++) {
 }
 
 export const getAdCards = (ads) => {
+  const cardsFragment = document.createDocumentFragment();
   ads.forEach(({author,offer}) => {
     const cardElement = cardTemplate.cloneNode(true);
     const featuresContainer = cardElement.querySelector('.popup__features');

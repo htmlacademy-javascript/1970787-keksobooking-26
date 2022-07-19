@@ -1,5 +1,5 @@
 import {getPageEnabled} from './page-status-toggler.js';
-import {cardsFragment, getAdCards} from './cards-html-creator.js';
+import {getAdCards} from './cards-html-creator.js';
 import {getAdsData} from './server-api.js';
 import {showAlert} from './util.js';
 
@@ -10,6 +10,7 @@ const START_POINT = {
 const CARDS_LIMIT = 10;
 
 const addressField = document.querySelector('#address');
+let adsFragment;
 
 const map = L.map('map-canvas')
   .on('load', () => {
@@ -55,6 +56,12 @@ const marker = L.marker(
 );
 
 const markerLayer = L.layerGroup().addTo(map);
+let adsLayer = L.layerGroup().addTo(map);
+
+const clearLayer = () => {
+  map.removeLayer(adsLayer);
+  adsLayer = L.layerGroup().addTo(map);
+};
 
 const createAdsMarker = (pointsData, index) => {
   const {location} = pointsData;
@@ -68,12 +75,13 @@ const createAdsMarker = (pointsData, index) => {
     }
   );
   adsMarker
-    .addTo(markerLayer)
-    .bindPopup(cardsFragment.children[index]);
+    .addTo(adsLayer)
+    .bindPopup(adsFragment.children[index]);
 };
 
-function getAdsPoints(ads) {
-  getAdCards(ads);
+export function getAdsPoints(ads) {
+  adsFragment = getAdCards(ads);
+  clearLayer();
   ads.forEach((pointsData, index) => {
     createAdsMarker(pointsData, index);
   });
@@ -88,6 +96,10 @@ marker.on('moveend', (evt) => {
 
 export const resetMap = () => {
   marker.setLatLng(START_POINT);
+  map.setView({
+    lat: START_POINT.lat,
+    lng: START_POINT.lng,
+  }, 12);
   addressField.value = `${START_POINT.lat.toFixed(5)}, ${START_POINT.lng.toFixed(5)}`;
 };
 

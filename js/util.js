@@ -30,3 +30,12 @@ export const debounce = (callback, timeoutDelay) => {
     timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
   };
 };
+
+export const compareContains = (arrayA, arrayB) => {
+  for(let i=0; i<arrayB.length; i++){
+    if(arrayA.indexOf(arrayB[i]) === -1) {
+      return false;
+    }
+  }
+  return true;
+};

@@ -1,7 +1,7 @@
 import {getAdsData} from './server-api.js';
 import {showAlert} from './util.js';
 import {getAdsPoints} from './map-creator.js';
-import {debounce} from './util.js';
+import {debounce, compareContains} from './util.js';
 
 const CARDS_LIMIT = 10;
 const LOW_PRICE = 10000;
@@ -38,19 +38,15 @@ const filterAdsPrice = (ads) => {
 
 const filterAdsFeatures = (ads) => {
   const checkedFeatures = Array.from(housingFeaturesField.querySelectorAll(':checked')).map((inputElement) => inputElement.value);
-  let test = false;
+  let addToFilter = false;
   if (checkedFeatures.length > 0) {
     if (ads.offer.features) {
-      for (let i = 0; i < ads.offer.features.length; i++) {
-        if (checkedFeatures.some((checkedFeature) => checkedFeature === ads.offer.features[i])) {
-          test = true;
-        }
-      }
+      addToFilter = compareContains(ads.offer.features, checkedFeatures);
     }
   } else {
-    test = true;
+    addToFilter = true;
   }
-  return test;
+  return addToFilter;
 };
 
 const getAdsFeaturesRank = (ads) => {

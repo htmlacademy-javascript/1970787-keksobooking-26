@@ -6,3 +6,4 @@ import './ad-form-validation.js';
 import './server-api.js';
 import './form-reset.js';
 import './ads-filter.js';
+import './ad-form-pictures-adding.js';

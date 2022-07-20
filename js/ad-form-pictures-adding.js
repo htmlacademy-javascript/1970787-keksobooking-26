@@ -42,7 +42,7 @@ adPhotoChooser.addEventListener('change', () => {
     const matches = FILE_TYPES.some((type) => fileName.endsWith(type));
 
     if (matches) {
-      createImagePreview(adPhotoPreviewContainer, URL.createObjectURL(files[i]), `Фотография жилья ${i}`, PREVIEW_WIDTH, PREVIEW_HEIGHT);
+      createImagePreview(adPhotoPreviewContainer, URL.createObjectURL(files[i]), `Фотография жилья ${i + 1}`, PREVIEW_WIDTH, PREVIEW_HEIGHT);
     }
   }
 });

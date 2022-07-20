@@ -1,16 +1,6 @@
 import {isEscapeKey} from './util.js';
 import {sendData} from './server-api.js';
 
-const form = document.querySelector('.ad-form');
-const body = document.querySelector('body');
-const roomNumber = form.querySelector('#room_number');
-const capacity = form.querySelector('#capacity');
-const adPrice = form.querySelector('#price');
-const houseType = form.querySelector('#type');
-const timesIn = form.querySelector('#timein');
-const timesOut = form.querySelector('#timeout');
-const submitButton = form.querySelector('.ad-form__submit');
-
 const ROOMS_WITHOUT_GUESTS = '100';
 const NO_GUESTS = '0';
 export const MIN_PRICES_OF_AD = {
@@ -20,6 +10,16 @@ export const MIN_PRICES_OF_AD = {
   bungalow: 0,
   hotel: 3000,
 };
+
+const form = document.querySelector('.ad-form');
+const body = document.querySelector('body');
+const roomNumber = form.querySelector('#room_number');
+const capacity = form.querySelector('#capacity');
+const adPrice = form.querySelector('#price');
+const houseType = form.querySelector('#type');
+const timesIn = form.querySelector('#timein');
+const timesOut = form.querySelector('#timeout');
+const submitButton = form.querySelector('.ad-form__submit');
 
 const synhroTimesInChange = () => {
   timesOut.value = timesIn.value;

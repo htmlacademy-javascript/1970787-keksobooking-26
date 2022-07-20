@@ -1,10 +1,10 @@
 import {MIN_PRICES_OF_AD, pristine} from './ad-form-validation.js';
 
-const sliderElement = document.querySelector('.ad-form__slider');
+const slider = document.querySelector('.ad-form__slider');
 const houseType = document.querySelector('#type');
 const adPrice = document.querySelector('#price');
 
-noUiSlider.create(sliderElement, {
+noUiSlider.create(slider, {
   range: {
     min: MIN_PRICES_OF_AD[houseType.value],
     max: 100000,
@@ -13,38 +13,28 @@ noUiSlider.create(sliderElement, {
   step: 1,
   connect: 'lower',
   format: {
-    to: function (value) {
-      return value.toFixed(0);
-    },
-    from: function (value) {
-      return parseFloat(value);
-    },
+    to: (value) => value.toFixed(0),
+    from: (value) => parseFloat(value),
   },
 });
 
-sliderElement.noUiSlider.on('update', () => {
-  adPrice.value = sliderElement.noUiSlider.get();
+slider.noUiSlider.on('update', () => {
+  adPrice.value = slider.noUiSlider.get();
   pristine.validate(adPrice);
 });
 
-adPrice.addEventListener('change', () => {
-  if (adPrice.value) {
-    sliderElement.noUiSlider.set(adPrice.value);
-  } else {
-    sliderElement.noUiSlider.set(MIN_PRICES_OF_AD[houseType.value]);
-  }
-});
+adPrice.addEventListener('change', () => adPrice.value ? slider.noUiSlider.set(adPrice.value) : slider.noUiSlider.set(MIN_PRICES_OF_AD[houseType.value]));
 
 export const resetSlider = () =>{
-  sliderElement.noUiSlider.set(MIN_PRICES_OF_AD[houseType.value]);
+  slider.noUiSlider.set(MIN_PRICES_OF_AD[houseType.value]);
 };
 
 houseType.addEventListener('change', () => {
-  sliderElement.noUiSlider.updateOptions({
+  slider.noUiSlider.updateOptions({
     range: {
       min: MIN_PRICES_OF_AD[houseType.value],
       max: 100000,
     }
   });
-  sliderElement.noUiSlider.set(MIN_PRICES_OF_AD[houseType.value]);
+  slider.noUiSlider.set(MIN_PRICES_OF_AD[houseType.value]);
 });

@@ -1,12 +1,6 @@
 export const getAdsData = (onSuccess, onFail) => {
   fetch('https://26.javascript.pages.academy/keksobooking/data')
-    .then((response) => {
-      if (response.ok) {
-        return response;
-      } else {
-        onFail('Не удалось загрузить объявления. Пожалуйста перезагрузите страницу');
-      }
-    })
+    .then((response) => response.ok ? response : onFail('Не удалось загрузить объявления. Пожалуйста перезагрузите страницу'))
     .then((response) => response.json())
     .then((ads) => onSuccess(ads))
     .catch(() => {
@@ -22,13 +16,7 @@ export const sendData = (onSuccess, onFail, body) => {
       body,
     },
   )
-    .then((response) => {
-      if (response.ok) {
-        onSuccess();
-      } else {
-        onFail('Данные не отправлены, попробуйте еще раз');
-      }
-    })
+    .then((response) => response.ok ? onSuccess() : onFail('Данные не отправлены, попробуйте еще раз'))
     .catch(() => {
       onFail('Данные не отправлены, попробуйте еще раз');
     });

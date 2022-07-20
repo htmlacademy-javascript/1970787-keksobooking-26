@@ -4,7 +4,6 @@ const PREVIEW_HEIGHT = 60;
 
 const avatarChooser = document.querySelector('.ad-form__field input[type=file]');
 const avatarPreview = document.querySelector('.ad-form-header__preview img');
-
 const adPhotoChooser = document.querySelector('.ad-form__upload input[type=file]');
 const adPhotoPreviewContainer = document.querySelector('.ad-form__photo');
 

@@ -1,4 +1,5 @@
 const ALERT_SHOW_TIME = 5000;
+
 export const isEscapeKey = (evt) => evt.key === 'Escape';
 
 export const showAlert = (message) => {

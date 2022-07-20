@@ -1,15 +1,6 @@
 import {isEscapeKey} from './util.js';
 import {sendData} from './server-api.js';
 
-const form = document.querySelector('.ad-form');
-const body = document.querySelector('body');
-const roomNumber = form.querySelector('#room_number');
-const capacity = form.querySelector('#capacity');
-const adPrice = form.querySelector('#price');
-const houseType = form.querySelector('#type');
-const timesIn = form.querySelector('#timein');
-const timesOut = form.querySelector('#timeout');
-
 const ROOMS_WITHOUT_GUESTS = '100';
 const NO_GUESTS = '0';
 export const MIN_PRICES_OF_AD = {
@@ -19,6 +10,16 @@ export const MIN_PRICES_OF_AD = {
   bungalow: 0,
   hotel: 3000,
 };
+
+const form = document.querySelector('.ad-form');
+const body = document.querySelector('body');
+const roomNumber = form.querySelector('#room_number');
+const capacity = form.querySelector('#capacity');
+const adPrice = form.querySelector('#price');
+const houseType = form.querySelector('#type');
+const timesIn = form.querySelector('#timein');
+const timesOut = form.querySelector('#timeout');
+const submitButton = form.querySelector('.ad-form__submit');
 
 const synhroTimesInChange = () => {
   timesOut.value = timesIn.value;
@@ -85,6 +86,16 @@ function closeMessageModal (message)  {
   document.removeEventListener('keydown', onPopupEscKeydown);
 }
 
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = 'Публикую...';
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = 'Опубликовать';
+};
+
 pristine.addValidator(roomNumber, checkRooms, 'Количество комнат не может быть меньше количества гостей, если помещение не предназначено для гостей выберите "100 комнат"');
 capacity.addEventListener('change', () => pristine.validate(roomNumber));
 
@@ -93,14 +104,17 @@ form.addEventListener('submit', (evt) => {
 
   const isValid = pristine.validate();
   if (isValid) {
+    blockSubmitButton();
     const formData = new FormData(evt.target);
     sendData(
       () => {
         openMessageModal('success');
+        unblockSubmitButton();
         form.reset();
       },
       () => {
         openMessageModal('error');
+        unblockSubmitButton();
       },
       formData,
     );

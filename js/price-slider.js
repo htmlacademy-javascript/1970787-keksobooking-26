@@ -26,6 +26,12 @@ slider.noUiSlider.on('update', () => {
 adPrice.addEventListener('change', () => adPrice.value ? slider.noUiSlider.set(adPrice.value) : slider.noUiSlider.set(MIN_PRICES_OF_AD[houseType.value]));
 
 export const resetSlider = () =>{
+  slider.noUiSlider.updateOptions({
+    range: {
+      min: MIN_PRICES_OF_AD[houseType.value],
+      max: 100000,
+    }
+  });
   slider.noUiSlider.set(MIN_PRICES_OF_AD[houseType.value]);
 };
 

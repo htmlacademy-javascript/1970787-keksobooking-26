@@ -6,7 +6,7 @@ const adPrice = document.querySelector('#price');
 
 noUiSlider.create(slider, {
   range: {
-    min: MIN_PRICES_OF_AD[houseType.value],
+    min: 0,
     max: 100000,
   },
   start: MIN_PRICES_OF_AD[houseType.value],
@@ -28,13 +28,3 @@ adPrice.addEventListener('change', () => adPrice.value ? slider.noUiSlider.set(a
 export const resetSlider = () =>{
   slider.noUiSlider.set(MIN_PRICES_OF_AD[houseType.value]);
 };
-
-houseType.addEventListener('change', () => {
-  slider.noUiSlider.updateOptions({
-    range: {
-      min: MIN_PRICES_OF_AD[houseType.value],
-      max: 100000,
-    }
-  });
-  slider.noUiSlider.set(MIN_PRICES_OF_AD[houseType.value]);
-});

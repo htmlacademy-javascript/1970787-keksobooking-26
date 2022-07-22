@@ -21,16 +21,16 @@ const timesIn = form.querySelector('#timein');
 const timesOut = form.querySelector('#timeout');
 const submitButton = form.querySelector('.ad-form__submit');
 
-const synhroTimesInChange = () => {
+const onTimesInChange = () => {
   timesOut.value = timesIn.value;
 };
 
-const synhroTimesOutChange = () => {
+const onTimesOutChange = () => {
   timesIn.value = timesOut.value;
 };
 
-timesOut.addEventListener('change', synhroTimesOutChange);
-timesIn.addEventListener('change', synhroTimesInChange);
+timesOut.addEventListener('change', onTimesOutChange);
+timesIn.addEventListener('change', onTimesInChange);
 
 export const pristine = new Pristine(form, {
   classTo: 'ad-form__element',
@@ -39,7 +39,7 @@ export const pristine = new Pristine(form, {
   errorTextClass: 'ad-form__label ad-form__label--error'
 });
 
-const getMinPriceOfAd = () => {
+export const onHouseTypeChange = () => {
   adPrice.placeholder = MIN_PRICES_OF_AD[houseType.value];
   pristine.validate(adPrice);
 };
@@ -59,7 +59,7 @@ const checkRooms = (value) => {
 const checkPrice = (value) => value >= MIN_PRICES_OF_AD[houseType.value];
 
 pristine.addValidator(adPrice, checkPrice, getMinPriceErrorMessage);
-houseType.addEventListener('change', getMinPriceOfAd);
+houseType.addEventListener('change', onHouseTypeChange);
 
 const onPopupEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -118,8 +118,6 @@ form.addEventListener('submit', (evt) => {
       },
       formData,
     );
-  } else {
-    openMessageModal('error');
   }
 });
 

@@ -1,6 +1,7 @@
 import {resetSlider} from './price-slider.js';
 import {resetMap} from './map-creator.js';
 import {setFilter} from './ads-filter.js';
+import {onHouseTypeChange} from './ad-form-validation.js';
 
 const adForm = document.querySelector('.ad-form');
 const filtersForm = document.querySelector('.map__filters');
@@ -11,8 +12,9 @@ adForm.addEventListener('reset', ()=> {
   avatarPreview.src = 'img/muffin-grey.svg';
   adPhotoPreviewContainer.innerHTML = '';
   filtersForm.reset();
-  resetSlider();
   setTimeout(() => {
+    onHouseTypeChange();
+    resetSlider();
     resetMap();
     setFilter();
   });
